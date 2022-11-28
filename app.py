@@ -1,4 +1,3 @@
 print("Goodbye, World!")
-import cpuinfo
-result = cpuinfo.get_cpu_info()['brand']
-print("result")
+import subprocess
+print((subprocess.check_output("lscpu", shell=True).strip()).decode())
