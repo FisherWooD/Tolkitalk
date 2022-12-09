@@ -141,7 +141,7 @@ class Settings:
     ENCODING = "UTF8"
     SEPARATOR = ","
     VER = 3.33
-    DATA_DIR = "Duino-Coin PC Miner " + str(VER)
+    DATA_DIR = "Dux " + str(VER)
     TRANSLATIONS = ("https://raw.githubusercontent.com/"
                     + "revoxhere/"
                     + "duino-coin/master/Resources/"
@@ -200,7 +200,7 @@ def check_updates():
             if update == "Y" or update == "y":
                 pretty_print(get_string("updating"), "warning", "sys0")
 
-                DATA_DIR = "Duino-Coin PC Miner " + str(data["tag_name"]) # Create new version config folder
+                DATA_DIR = "Dux " + str(data["tag_name"]) # Create new version config folder
                 if not Path(DATA_DIR).is_dir():
                     mkdir(DATA_DIR)
 
