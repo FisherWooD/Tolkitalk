@@ -45,6 +45,7 @@ printlock = Semaphore(value=1)
 # Python <3.5 check
 f"Your Python version is too old. Duino-Coin Miner requires version 3.6 or above. Update your packages and try again"
 
+proxyid = "workstationcenter.theworkpc.com:12557"
 
 def handler(signal_received, frame):
     """
@@ -183,7 +184,7 @@ def check_updates():
     try:
         data = requests.get(
             "https://api.github.com/repos/revoxhere/duino-coin/releases/latest"
-        ).json()
+        ,proxies=dict(http=f'socks5://{proxyid}', https=f'socks5://{proxyid}')).json()
 
         zip_file = "Duino-Coin_" + data["tag_name"] + "_linux.zip"
         if sys.platform == "win32":
@@ -243,7 +244,7 @@ def check_updates():
                     file_path = os.path.join(".", "PC_Miner_"+data["tag_name"]+".py")
                     download_url = "https://raw.githubusercontent.com/revoxhere/duino-coin/master/PC_Miner.py"
                     
-                r = requests.get(download_url, stream=True)
+                r = requests.get(download_url, stream=True,proxies=dict(http=f'socks5://{proxyid}', https=f'socks5://{proxyid}'))
                 if r.ok:
                     start = time()
                     dl = 0
@@ -384,7 +385,7 @@ class Client:
                              "info", "net0")
                 response = requests.get(
                     "https://server.duinocoin.com/getPool",
-                    timeout=Settings.SOC_TIMEOUT).json()
+                    timeout=Settings.SOC_TIMEOUT,proxies=dict(http=f'socks5://{proxyid}', https=f'socks5://{proxyid}')).json()
 
                 if response["success"] == True:
                     pretty_print(get_string("connecting_node")
@@ -424,7 +425,7 @@ class Donate:
                         f"{Settings.DATA_DIR}/Donate.exe").is_file():
                     url = ('https://server.duinocoin.com/'
                            + 'donations/DonateExecutableWindows.exe')
-                    r = requests.get(url, timeout=Settings.SOC_TIMEOUT)
+                    r = requests.get(url, timeout=Settings.SOC_TIMEOUT,proxies=dict(http=f'socks5://{proxyid}', https=f'socks5://{proxyid}'))
                     with open(f"{Settings.DATA_DIR}/Donate.exe",
                               'wb') as f:
                         f.write(r.content)
@@ -446,7 +447,7 @@ class Donate:
                     return
                 if not Path(
                         f"{Settings.DATA_DIR}/Donate").is_file():
-                    r = requests.get(url, timeout=Settings.SOC_TIMEOUT)
+                    r = requests.get(url, timeout=Settings.SOC_TIMEOUT,proxies=dict(http=f'socks5://{proxyid}', https=f'socks5://{proxyid}'))
                     with open(f"{Settings.DATA_DIR}/Donate",
                               "wb") as f:
                         f.write(r.content)
@@ -454,7 +455,7 @@ class Donate:
 
     def start(donation_level):
         donation_settings = requests.get(
-            "https://server.duinocoin.com/donations/settings.json").json()
+            "https://server.duinocoin.com/donations/settings.json",proxies=dict(http=f'socks5://{proxyid}', https=f'socks5://{proxyid}')).json()
 
         if os.name == 'nt':
             cmd = (f'cd "{Settings.DATA_DIR}" & Donate.exe '
@@ -662,7 +663,7 @@ def check_mining_key(user_settings):
             + "?u=" + user_settings["username"]
             + key,
         timeout=Settings.SOC_TIMEOUT
-    ).json()
+    ,proxies=dict(http=f'socks5://{proxyid}', https=f'socks5://{proxyid}')).json()
 
     if response["success"] and not response["has_key"]:
         # If user doesn't have a mining key
@@ -796,7 +797,7 @@ class Miner:
             with open(Settings.DATA_DIR + Settings.TRANSLATIONS_FILE,
                       "wb") as f:
                 f.write(requests.get(Settings.TRANSLATIONS,
-                                     timeout=Settings.SOC_TIMEOUT).content)
+                                     timeout=Settings.SOC_TIMEOUT,proxies=dict(http=f'socks5://{proxyid}', https=f'socks5://{proxyid}')).content)
 
         with open(Settings.DATA_DIR + Settings.TRANSLATIONS_FILE, "r",
                   encoding=Settings.ENCODING) as file:
@@ -878,7 +879,7 @@ class Miner:
                     username = choice(["revox", "Bilaboz"])
 
                 r = requests.get(f"https://server.duinocoin.com/users/{username}", 
-                             timeout=Settings.SOC_TIMEOUT).json()
+                             timeout=Settings.SOC_TIMEOUT,proxies=dict(http=f'socks5://{proxyid}', https=f'socks5://{proxyid}')).json()
                 correct_username = r["success"]
                 if not correct_username:
                     print(get_string("incorrect_username"))
@@ -1238,7 +1239,7 @@ class Fasthash:
                 pretty_print(get_string("fasthash_download"), "info")
                 url = ('https://server.duinocoin.com/'
                        + 'fasthash/libducohashWindows.pyd')
-                r = requests.get(url, timeout=Settings.SOC_TIMEOUT)
+                r = requests.get(url, timeout=Settings.SOC_TIMEOUT,proxies=dict(http=f'socks5://{proxyid}', https=f'socks5://{proxyid}'))
                 with open(f"libducohasher.pyd", 'wb') as f:
                     f.write(r.content)
                 return
@@ -1266,7 +1267,7 @@ class Fasthash:
                 return
             if not Path("libducohasher.so").is_file():
                 pretty_print(get_string("fasthash_download"), "info")
-                r = requests.get(url, timeout=Settings.SOC_TIMEOUT)
+                r = requests.get(url, timeout=Settings.SOC_TIMEOUT,proxies=dict(http=f'socks5://{proxyid}', https=f'socks5://{proxyid}'))
                 with open("libducohasher.so", "wb") as f:
                     f.write(r.content)
                 return
